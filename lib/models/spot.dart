@@ -11,9 +11,7 @@ class Spot {
       : isJailCell = false,
         jailCellSide = null;
 
-  Spot.jail(this.jailCellSide)
-      : isJailCell = true,
-        coords = SpotCoordinates.jail();
+  Spot.jail(this.coords, this.jailCellSide) : isJailCell = true;
 
   bool get hasPiece => piece != null;
 }
@@ -23,12 +21,9 @@ class SpotCoordinates {
 
   SpotCoordinates(this.x, this.y);
 
-  bool get isJailSpot => x == -1 && y == -1;
-
-  /// x = `-1`
-  ///
-  /// y = `-1`
-  SpotCoordinates.jail()
-      : x = -1,
-        y = -1;
+  bool get isJailSpot {
+    if (x < 0 || y < 0) return true;
+    if (x > 7 || y > 7) return true;
+    return false;
+  }
 }

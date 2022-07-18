@@ -22,12 +22,12 @@ class ChessBoard {
   void _initCells() {
     spots = _generateEmptyBoard();
     whiteJail = [
-      Spot.jail(Side.white),
-      Spot.jail(Side.white),
+      Spot.jail(SpotCoordinates(-2, 3), Side.white),
+      Spot.jail(SpotCoordinates(-2, 4), Side.white),
     ];
     whiteJail = [
-      Spot.jail(Side.black),
-      Spot.jail(Side.black),
+      Spot.jail(SpotCoordinates(9, 3), Side.black),
+      Spot.jail(SpotCoordinates(9, 3), Side.black),
     ];
   }
 

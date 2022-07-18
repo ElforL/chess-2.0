@@ -41,21 +41,19 @@ class ChessBoard {
     );
   }
 
-  /// Returns the [Spot] of given [coordinates].
+  /// Returns the [Spot] of given [coordinates] on main board or jail spots.
   ///
-  /// Assumes [coordinates] are in range, so it could throw a [RangeError].
-  /// Suggest using [isOutOfRange] before.
+  /// Assumes [coordinates] are in range, so it throws a [RangeError] if [coordinates] are invalid.
   Spot getSpotFromCoords(SpotCoordinates coordinates) {
-    return spots[coordinates.y][coordinates.x];
-  }
-
-  // TODO: test
-  bool isOutOfRange(SpotCoordinates coordinates) {
     try {
-      spots[coordinates.y][coordinates.x];
-      return false;
-    } on RangeError catch (_) {
-      return true;
+      return spots[coordinates.y][coordinates.x];
+    } on RangeError {
+      final wIndex = whiteJail.indexWhere((jailSpot) => jailSpot.coords == coordinates);
+      if (wIndex != -1) return whiteJail[wIndex];
+      final bIndex = blackJail.indexWhere((jailSpot) => jailSpot.coords == coordinates);
+      if (bIndex != -1) return blackJail[bIndex];
+
+      rethrow;
     }
   }
 

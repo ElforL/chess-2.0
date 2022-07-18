@@ -26,4 +26,12 @@ class SpotCoordinates {
     if (x > 7 || y > 7) return true;
     return false;
   }
+
+  @override
+  bool operator ==(other) {
+    return other is SpotCoordinates && other.x == x && other.y == y;
+  }
+
+  @override
+  int get hashCode => Object.hash(x, y);
 }

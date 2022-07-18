@@ -1,5 +1,6 @@
 import '../board.dart';
 import '../spot.dart';
+import 'king.dart';
 import 'piece.dart';
 
 /// ## Moving
@@ -14,16 +15,14 @@ class Monkey extends ChessPiece {
     final endSpot = board.getSpotFromCoords(coordinates);
 
     if (endSpot.isJailCell) {
-      // TODO implement King saving
+      final nearJail = board.isSpotNextToEnemyJail(this.coordinates, side);
+      // Return `false` if monkey is not next to the enemy's jail spots.
+      // or if he's next to the other jail spot.
+      if (!nearJail || y != coordinates.y) return false;
 
-      // must be in the middle rows
-      if (y != board.spots.length - 1 && y != board.spots.length - 2) return false;
-
-      // Must be next to enemy jail
-      // TODO check with the issue about similar indecies for both players (detailed in ChessBoard class above spots declaration)
-      //  if you decide to go with different indecies/coords change this 👇 to x != 0 only since the location of enemy cells is on the left
-      //  Otherwise, implement a method in board class (?) to check if spot is near an enemy cell (Paramaters should be: coords, side)
-      if (x != 0 && x != board.spots.length - 1) return false;
+      if (endSpot.piece is! King) return false;
+      final king = endSpot.piece as King;
+      if (!king.hasBanana) return false;
 
       return _checkForEscapeSpot(board);
     }

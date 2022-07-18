@@ -2,10 +2,10 @@ import 'package:chess_2/models/pieces/piece.dart';
 import 'package:chess_2/models/spot.dart';
 
 class ChessBoard {
-  // TODO are the indecies the same for all players?
-  //  So if i'm playing white for example and the black pieces are at y = 0 and y = 1
-  //  is it the same for black player? are my white pieces are at his y = 0-1????!.
-  //  🐵 Fix Monkey jail position check once fixed. 🐵
+  /// The spots on the board excluding jail spots.
+  ///
+  /// White pieces start at y = 0-1
+  /// and black pieces at 6-7
   late final List<List<Spot>> spots;
   late final List<Spot> whiteJail;
   late final List<Spot> blackJail;
@@ -41,15 +41,12 @@ class ChessBoard {
     );
   }
 
+  /// Returns the [Spot] of given [coordinates].
+  ///
+  /// Assumes [coordinates] are in range, so it could throw a [RangeError].
+  /// Suggest using [isOutOfRange] before.
   Spot getSpotFromCoords(SpotCoordinates coordinates) {
-    try {
-      return spots[coordinates.y][coordinates.x];
-    } catch (e) {
-      // TODO remove print.
-      //  ignore: avoid_print
-      print('getSpotFromCoords() error. Is it and out of range error?');
-      rethrow;
-    }
+    return spots[coordinates.y][coordinates.x];
   }
 
   // TODO: test
@@ -59,6 +56,23 @@ class ChessBoard {
       return false;
     } on RangeError catch (_) {
       return true;
+    }
+  }
+
+  /// Returns `true` if the spot with given [coordinates] are next to [side]'s enemy's jail.
+  ///
+  /// [side] is for the player's side **not the enemy**.
+  bool isSpotNextToEnemyJail(SpotCoordinates coordinates, Side side) {
+    // Must be in middle rows
+    if (coordinates.y != spots.length - 1 && coordinates.y != spots.length - 2) return false;
+
+    switch (side) {
+      case Side.white:
+        return coordinates.x == spots.length - 1;
+      case Side.black:
+        return coordinates.x == 0;
+      case Side.neutral:
+        return false;
     }
   }
 }

@@ -57,3 +57,7 @@ class Queen extends ChessPiece {
     return false;
   }
 }
+
+class FishyQueen extends Queen {
+  FishyQueen(super.coordinates, super.side);
+}

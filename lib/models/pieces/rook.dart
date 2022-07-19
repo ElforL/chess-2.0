@@ -13,6 +13,8 @@ class Rook extends ChessPiece {
     if (!isValidNewSpot(coordinates)) return false;
 
     var endSpot = board.getSpotFromCoords(coordinates);
+    if (endSpot.isJailCell) return false;
+
     final isSpotEmpty = !endSpot.hasPiece;
 
     if (isSpotEmpty) {

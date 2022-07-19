@@ -9,6 +9,7 @@ class Elephant extends ChessPiece {
   bool isLegalMove(SpotCoordinates coordinates, ChessBoard board) {
     if (!isValidNewSpot(coordinates)) return false;
     final endSpot = board.getSpotFromCoords(coordinates);
+    if (endSpot.isJailCell) return false;
 
     // can move if there's no piece or the piece isn't a teammate
     return !endSpot.hasPiece || endSpot.piece?.side != side;

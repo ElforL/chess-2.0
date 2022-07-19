@@ -20,6 +20,7 @@ class King extends ChessPiece {
 
   @override
   bool isValidNewSpot(SpotCoordinates coordinates) {
+    if (coordinates == this.coordinates) return false;
     final dx = (coordinates.x - x).abs();
     final dy = (coordinates.y - y).abs();
 

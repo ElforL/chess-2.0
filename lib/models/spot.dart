@@ -1,3 +1,4 @@
+import 'board.dart';
 import 'pieces/piece.dart';
 
 class Spot {
@@ -28,7 +29,7 @@ class SpotCoordinates {
 
   bool get isJailSpot {
     if (x < 0 || y < 0) return true;
-    if (x > 7 || y > 7) return true;
+    if (x >= ChessBoard.width || y >= ChessBoard.height) return true;
     return false;
   }
 
@@ -42,6 +43,6 @@ class SpotCoordinates {
 
   @override
   String toString() {
-    return 'SpotCoordinates($x, $y)';
+    return '${isJailSpot ? 'Jail-' : ''}SpotCoordinates($x, $y)';
   }
 }

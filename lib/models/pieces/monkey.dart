@@ -9,6 +9,10 @@ import 'piece.dart';
 class Monkey extends ChessPiece {
   Monkey(super.coordinates, super.side);
 
+  /// When the monkey saves the king, it'll hold him until the next move.
+  King? heldKing;
+  bool get isHoldingKing => heldKing != null;
+
   @override
   bool isLegalMove(SpotCoordinates coordinates, ChessBoard board) {
     if (!isValidNewSpot(coordinates)) return false;

@@ -2,6 +2,9 @@ import 'pieces/piece.dart';
 import 'spot.dart';
 
 class ChessBoard {
+  static const width = 8;
+  static const height = 8;
+
   /// The spots on the board excluding jail spots.
   ///
   /// White pieces start at y = 0-1
@@ -33,9 +36,9 @@ class ChessBoard {
 
   List<List<Spot>> _generateEmptyBoard() {
     return List.generate(
-      8,
+      height,
       (y) => List.generate(
-        8,
+        width,
         (x) => Spot(SpotCoordinates(x, y)),
       ),
     );

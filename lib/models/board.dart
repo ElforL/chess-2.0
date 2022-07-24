@@ -1,5 +1,5 @@
-import 'package:chess_2/models/pieces/piece.dart';
-import 'package:chess_2/models/spot.dart';
+import 'pieces/piece.dart';
+import 'spot.dart';
 
 class ChessBoard {
   /// The spots on the board excluding jail spots.

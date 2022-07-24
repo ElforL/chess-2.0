@@ -1,4 +1,4 @@
-import 'package:chess_2/models/board.dart';
+import 'board.dart';
 
 import 'spot.dart';
 

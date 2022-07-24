@@ -1,5 +1,5 @@
-import 'package:chess_2/models/board.dart';
-import 'package:chess_2/models/spot.dart';
+import '../board.dart';
+import '../spot.dart';
 
 abstract class ChessPiece {
   SpotCoordinates coordinates;

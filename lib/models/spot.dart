@@ -1,4 +1,4 @@
-import 'package:chess_2/models/pieces/piece.dart';
+import 'pieces/piece.dart';
 
 class Spot {
   final SpotCoordinates coords;

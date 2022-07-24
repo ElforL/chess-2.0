@@ -3,7 +3,7 @@ import '../spot.dart';
 
 abstract class ChessPiece {
   SpotCoordinates coordinates;
-  Side side;
+  final Side side;
 
   ChessPiece(this.coordinates, this.side);
 

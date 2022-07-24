@@ -76,4 +76,10 @@ class ChessBoard {
         return false;
     }
   }
+
+  static bool areValidCoordinates(SpotCoordinates coordinates) {
+    if (coordinates.x < 0 || coordinates.x >= width) return false;
+    if (coordinates.y < 0 || coordinates.y >= height) return false;
+    return true;
+  }
 }

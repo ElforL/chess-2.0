@@ -14,6 +14,11 @@ class Spot {
   Spot.jail(this.coords, this.jailCellSide) : isJailCell = true;
 
   bool get hasPiece => piece != null;
+
+  @override
+  String toString() {
+    return '${isJailCell ? 'Jail ' : ''}Spot(${coords.x}, ${coords.y})';
+  }
 }
 
 class SpotCoordinates {
@@ -34,4 +39,9 @@ class SpotCoordinates {
 
   @override
   int get hashCode => Object.hash(x, y);
+
+  @override
+  String toString() {
+    return 'SpotCoordinates($x, $y)';
+  }
 }

@@ -1,5 +1,5 @@
-import '../pieces/piece.dart';
-import '../spot.dart';
+import 'pieces/piece.dart';
+import 'spot.dart';
 
 class IllegalMoveError {
   final ChessPiece piece;
@@ -11,5 +11,16 @@ class IllegalMoveError {
   @override
   String toString() {
     return 'IllegalMoveError: Moving ${piece.runtimeType} from $startCoordinates to $endCoordinates.';
+  }
+}
+
+class MustJailRoyalsError {
+  final ChessPiece heldPiece;
+
+  MustJailRoyalsError(this.heldPiece);
+
+  @override
+  String toString() {
+    return 'MustJailRoyalsError: Must move ${heldPiece.runtimeType} to jail first.';
   }
 }

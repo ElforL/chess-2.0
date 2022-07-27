@@ -65,11 +65,11 @@ class Monkey extends ChessPiece {
       return dX == 2 || dX == 1 || dY == 2 || dY == 1;
     }
 
-    /// is the change in x within 1 - 2
-    final xInRange = dX == 2 || dX == 1;
+    /// is the change in x within 0 - 2
+    final xInRange = dX <= 2 && dX >= 0;
 
     // return true if both changes are equal (i.e., the change is diagonal)
-    // and the change is between 1 or 2
+    // and the change is between 0 or 2
     return dX == dY && xInRange;
   }
 

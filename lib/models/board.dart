@@ -17,6 +17,8 @@ class ChessBoard {
   late final List<Spot> whiteJail;
   late final List<Spot> blackJail;
 
+  Side currentTurnSide = Side.white;
+
   /// all spots in [whiteJail] are filled making white the winner.
   bool get whiteJailFilled => whiteJail.every((spot) => spot.hasPiece);
 
@@ -140,11 +142,19 @@ class ChessBoard {
     final startSpot = getSpotFromCoords(start);
     if (!startSpot.hasPiece) return; // TODO throw error? (update func docs)
 
-    final startPiece = startSpot.piece;
+    final startPiece = startSpot.piece!;
+    if (startPiece.side != Side.neutral && startPiece.side != currentTurnSide) {
+      throw MoveOpponentPieceError(currentTurnSide, startPiece);
+    }
+
     final endSpot = getSpotFromCoords(end);
 
-    final isLegalMove = startPiece!.isLegalMove(end, this);
+    final isLegalMove = startPiece.isLegalMove(end, this);
     if (!isLegalMove) throw IllegalMoveError(startPiece, start, end);
+
+    /// Should end the current side's turn after the move is done?
+    /// e.g., when a monkey jumps over a piece it can still jump over another one.
+    bool endSideTurn = true;
 
     if (!endSpot.isJailCell) {
       // Update the end spot and piece coords.
@@ -157,10 +167,19 @@ class ChessBoard {
       startPiece.coordinates = end;
 
       // Check if it's a Monkey holding a king.
-      if (startPiece is Monkey && startPiece.isHoldingKing) {
-        // Drop the king at [start]
-        startSpot.piece = startPiece.heldKing;
-        startPiece.heldKing = null;
+      if (startPiece is Monkey) {
+        final xDiff = end.x - start.x;
+        final yDiff = end.y - start.y;
+
+        if (xDiff == 2 || yDiff == 2) {
+          // if the monkey jumped over a piece then don't end the player's turn yet.
+          endSideTurn = false;
+        }
+        if (startPiece.isHoldingKing) {
+          // Drop the king at [start]
+          startSpot.piece = startPiece.heldKing;
+          startPiece.heldKing = null;
+        }
       } else {
         // Empty the [start] spot.
         startSpot.piece = null;
@@ -179,7 +198,10 @@ class ChessBoard {
       startPiece.heldKing = endSpot.piece as King?;
       startPiece.heldKing!.coordinates = start;
       startPiece.heldKing!.hasBanana = false;
+      endSideTurn = false;
     }
+
+    if (endSideTurn) _flipCurrentSide();
   }
 
   /// Handles taking a piece at [endSpot].
@@ -215,8 +237,23 @@ class ChessBoard {
     }
   }
 
+  /// Resets [didWhiteKill] and [didBlackKill]
   void _resetKills() {
     didWhiteKill = false;
     didBlackKill = false;
+  }
+
+  /// Changes [currentTurnSide] to the opponent of [currentTurnSide].
+  void _flipCurrentSide() {
+    switch (currentTurnSide) {
+      case Side.white:
+        currentTurnSide = Side.black;
+        break;
+      case Side.black:
+        currentTurnSide = Side.white;
+        break;
+      default:
+        throw Exception('currentTurnSide must only be white or black: $currentTurnSide');
+    }
   }
 }

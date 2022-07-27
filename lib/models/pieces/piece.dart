@@ -18,10 +18,19 @@ abstract class ChessPiece {
 
   // TODO check for checkmate when calling this 👇
   bool isLegalMove(SpotCoordinates coordinates, ChessBoard board);
+
+  @override
+  String toString() {
+    return '$runtimeType(x:$x, y:$y, side:${side.toShortString()})';
+  }
 }
 
 enum Side {
   white,
   black,
-  neutral,
+  neutral;
+
+  String toShortString() {
+    return toString().split('.').last;
+  }
 }

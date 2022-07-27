@@ -24,3 +24,15 @@ class MustJailRoyalsError {
     return 'MustJailRoyalsError: Must move ${heldPiece.runtimeType} to jail first.';
   }
 }
+
+class MoveOpponentPieceError {
+  final Side currentSide;
+  final ChessPiece piece;
+
+  MoveOpponentPieceError(this.currentSide, this.piece);
+
+  @override
+  String toString() {
+    return 'MoveOpponentPieceError: Player of side ${currentSide.toShortString()} can not move a piece of side ${piece.side.toShortString()}';
+  }
+}
